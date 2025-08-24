@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%- include('./partials/head') %>
+    <title>My Blog</title>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <%- include('./partials/nav') %>
+
+  <!-- Hero Section -->
+  <header class="bg-light text-dark py-5">
+    <div class="container text-center">
+      <h1 class="display-4 fw-bold">Welcome to My Blog</h1>
+      <p class="lead">Sharing ideas, tutorials, and stories with the world.</p>
+      <a href="#" class="btn btn-primary btn-lg mt-3">Read Latest Posts</a>
+    </div>
+  </header>
+
+  <!-- Blog Section -->
+  <main class="container my-5">
+    <div class="row">
+
+      <% if(locals.blogs) { %>
+        <% blogs.forEach((blog) => { %>
+        <!-- Blog Post Card -->
+        <div class="col-md-4 mb-4" id="blog-<%= blog._id %>">
+          <div class="card h-100 shadow-sm">
+            <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="Blog Post">
+            <div class="card-body">
+              <h5 class="card-title"><%= blog.title %></h5>
+              <p class="card-text"><%= blog.body %> </p>
+              <a href="/blog/<%= blog._id %>" class="btn btn-outline-primary">View</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-light py-4">
+    <div class="container text-center">
+      <p class="mb-1">&copy; 2025 MyBlog. All Rights Reserved.</p>
+      <small>Made with ❤️ using Bootstrap 5</small>
+    </div>
+  </footer>
+
+  <%- include('./partials/scripts') %>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<div class="comments-wrapper">
+  <h3 class="mb-4">Comments</h3>
+
+  <!-- Displayed Comments -->
+   <%= //JSON.stringify(comments) %>
+
+  <div id="commentsList">
+    <% if(locals.comments) { %>
+      <% comments.forEach((comment) => { %>
+        <div class="comment-box">
+          <div class="d-flex justify-content-between">
+            <span class="comment-author"><%= comment.createdBy.fullName %></span>
+            <span class="comment-time"><%= comments_additional_values[comment._id].ago//formatTimeAgo(comment.createdBy.fullName) %></span>
+          </div>
+          <div class="comment-text"><%= comment.content %></div>
+        </div>
+      <% }) %>
+    <% } %>
+    
+  </div>
+
+  <!-- Add New Comment -->
+  <div class="card mt-4 shadow-sm">
+    <div class="card-body">
+      <form id="commentForm" method="POST" action="/blog/comment/<%= blog._id %>">
+        
+        <div class="mb-3">
+          <label for="commentInput" class="form-label">Your Comment</label>
+          <input type="hidden" class="author_name" id="author" name="author" value="<%= blog.createdBy.fullName %>"/>
+          <textarea id="comment" name="comment" class="form-control" rows="5" maxlength="500" placeholder="Write your thoughts…" required></textarea>
+          <div class="d-flex justify-content-between mt-2">
+            <small class="helper">Max 500 characters</small>
+            <small class="helper" id="counter">0 / 500</small>
+          </div>
+          <div class="invalid-feedback">Please enter a comment.</div>
+        </div>
+        
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Post Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("commentForm");
+  const commentsList = document.getElementById("commentsList");
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const author = document.getElementById("author").value;
+    const commentText = document.getElementById("comment").value;
+
+    if(author && commentText){
+      const newComment = document.createElement("div");
+      newComment.classList.add("comment-box");
+      newComment.innerHTML = `
+        <div class="d-flex justify-content-between">
+          <span class="comment-author">${author}</span>
+          <span class="comment-time">Just now</span>
+        </div>
+        <div class="comment-text">${commentText}</div>
+      `;
+      commentsList.prepend(newComment); // add new comment on top
+
+      // reset form
+      form.submit();
+      //form.reset();
+    }
+  });
+
+  const ta = document.getElementById('comment');
+  const counter = document.getElementById('counter');
+  ta.addEventListener('input', () => counter.textContent = `${ta.value.length} / ${ta.maxLength}`);
+
+  //const form = document.getElementById('commentForm');
+  form.addEventListener('submit', (e) => {
+    if (!form.checkValidity()) e.preventDefault();
+    form.classList.add('was-validated');
+  });
+
+</script>

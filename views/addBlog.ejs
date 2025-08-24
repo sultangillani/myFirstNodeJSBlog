@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('./partials/head') %>
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: "Poppins", sans-serif;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+            color: #fff;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            padding: 20px;
+        }
+        .btn-custom {
+            background: linear-gradient(90deg, #0d6efd, #6610f2);
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            opacity: 0.9;
+        }
+        .img-preview {
+            margin-top: 15px;
+            max-width: 100%;
+            border-radius: 10px;
+            display: none;
+        }
+    </style>
+
+    <title>My Blog</title>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <%- include('./partials/nav') %>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Create New Blog Post</h2>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="blogForm" action="/blog" method="POST" enctype="multipart/form-data">
+                            <!-- Title -->
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Blog Title</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Enter blog title" required>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="mb-3">
+                                <label for="body" class="form-label">Blog Content</label>
+                                <textarea class="form-control" id="body" name="body" rows="6" placeholder="Write your blog here..." required></textarea>
+                            </div>
+
+                            <!-- Cover Image -->
+                            <div class="mb-3">
+                                <label for="coverImageURL" class="form-label">Cover Image</label>
+                                <input type="file" class="form-control" id="coverImageURL" name="coverImage" accept="image/*">
+                                <img id="preview" class="img-preview mt-3" />
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-custom btn-lg">Submit Blog</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+        <p class="mb-1">&copy; 2025 MyBlog. All Rights Reserved.</p>
+        <small>Made with ❤️ using Bootstrap 5</small>
+        </div>
+    </footer>
+
+    <script>
+        // Image Preview
+        document.getElementById('coverImageURL').addEventListener('change', function(event){
+            const file = event.target.files[0];
+            const preview = document.getElementById('preview');
+            if(file){
+                const reader = new FileReader();
+                reader.onload = function(e){
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.style.display = "none";
+            }
+        });
+
+        // Form Submission Demo
+        /*document.getElementById('blogForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            alert("Blog Submitted Successfully! 🚀");
+        });*/
+    </script>
+
+    <%- include('./partials/scripts') %>
+</body>
+</html>

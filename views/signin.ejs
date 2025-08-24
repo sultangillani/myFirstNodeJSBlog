@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <%- include('./partials/head') %>
+
+  <title>Sign In</title>
+  
+  <style>
+    body {
+      background: #f8f9fa;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 25px;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-header h3 {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<%- include('./partials/nav') %>
+
+<div class="container">
+  <div class="form-container">
+    
+    <% if(locals.error) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= locals.error %>
+      </div>
+    <% } %>
+
+    <div class="form-header">
+      <h3>Sign In</h3>
+      <p>Welcome back! Please login.</p>
+    </div>
+    <form id="signinForm" method="POST" action="/user/signin">
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-success w-100">Sign In</button>
+    </form>
+    <p class="text-center mt-3">Don’t have an account? <a href="signup.html">Sign Up</a></p>
+  </div>
+</div>
+
+<script>
+/*document.getElementById('signinForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Sign In form submitted!');
+});*/
+</script>
+<%- include('./partials/scripts') %>
+</body>
+</html>

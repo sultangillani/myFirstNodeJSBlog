@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 const express = require('express'); 
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 //middlewares
 const { checkForAuthenticationCookie } = require('./middlewares/authentication');
@@ -14,7 +16,7 @@ const blogRoute = require('./routes/blog');
 
 //Connect
 const {connectMongoDb} = require('./connect');
-const dbURI = 'mongodb://127.0.0.1:27017/blog'; 
+const dbURI = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/blog'; 
 
 //models
 const Blog = require('./models/blog');
